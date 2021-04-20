@@ -27,7 +27,6 @@ logging.basicConfig(format='%(levelname)s:%(message)s',
 log = logging.getLogger(__name__)
 HERE = os.path.dirname(__file__)
 
-
 def command_line_args():
     """Returns namespace with settings from command line"""
     log.debug("-> Command line args")
@@ -69,7 +68,7 @@ def config_file_args(config_file_paths, project=None):
     log.debug("-> config file args")
     config = configparser.ConfigParser()
     for path in config_file_paths:
-        relative = os.path.join(HERE, path)
+        relative = os.path.join(os.path.dirname(HERE), path)
         if os.path.exists(path):
             log.info("Configuring from {}".format(path))
             config.read(path)
