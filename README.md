@@ -12,6 +12,24 @@ Like Project 1, if a file (`docroot/name.extension`, any name, any extention or 
     
     ⚠️ NOTE: it's okay if `//` doesn't work if it's at the beginning of the request since Flask will remove those.
 
+### How to run and test the server? ###
+
+* Go to the web folder in the repository. Read every line of the docker file and the simple flask app.
+
+* Build the simple flask app image using
+
+  ```
+  docker build -t your-name-cis322-2 .
+  ```
+  **Make sure to use a unique name if you're running on testium.**
+* Run the container using
+
+  ```
+  docker run -d -p port:5000 your-name-cis322-2
+  ```
+NOTE: Make sure to specify a free port here.
+* Launch `http://hostname:port` using your web browser and check the output "UOCIS docker demo!".
+
 ## Basic Docker commands
 
 * Get information about docker setup the machine
