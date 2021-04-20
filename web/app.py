@@ -3,8 +3,8 @@ Ellie Yun's Flask API.
 """
 
 from flask import Flask, render_template, send_from_directory, abort
-import config
-
+import config, logging
+log = logging.getLogger(__name__)
 app = Flask(__name__)
 
 forbidden_symbols = ["//", "~", ".."]
@@ -14,13 +14,13 @@ def find_file(f_name):
     # parse DOCROOT from the .ini file
     options = config.configuration()
     DOCROOT = options.DOCROOT
-
+    log.info(DOCROOT)
     check_symbol = [symbol for symbol in forbidden_symbols if symbol in f_name]
     
     if len(check_symbol) > 0:
         abort(403)
-    return DOCROOT
-    #return send_from_directory(DOCROOT, f_name), 200
+    
+    return send_from_directory(DOCROOT, f_name), 200
 
 @app.errorhandler(403)
 def forbidden(e):
@@ -31,4 +31,4 @@ def not_found_error(e):
     return render_template('404.html'),404
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
