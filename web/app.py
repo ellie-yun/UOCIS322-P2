@@ -3,6 +3,7 @@ Ellie Yun's Flask API.
 """
 
 from flask import Flask, render_template, send_from_directory, abort
+import config
 
 app = Flask(__name__)
 
@@ -10,10 +11,16 @@ forbidden_symbols = ["//", "~", ".."]
 
 @app.route('/<path:f_name>')
 def find_file(f_name):
+    # parse DOCROOT from the .ini file
+    options = config.configuration()
+    DOCROOT = options.DOCROOT
+
     check_symbol = [symbol for symbol in forbidden_symbols if symbol in f_name]
+    
     if len(check_symbol) > 0:
         abort(403)
-    return send_from_directory("templates", f_name), 200
+    return DOCROOT
+    #return send_from_directory(DOCROOT, f_name), 200
 
 @app.errorhandler(403)
 def forbidden(e):
